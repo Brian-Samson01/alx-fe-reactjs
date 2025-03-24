@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import useRecipeStore from '../store/useRecipeStore';
+import useRecipeStore from '../components/recipeStore';
 import EditRecipeForm from '../components/EditRecipeForm';
 
 const RecipeDetails = () => {
