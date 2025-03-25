@@ -1,3 +1,4 @@
+// src/components/EditRecipeForm.jsx
 import { useState, useEffect } from 'react';
 import useRecipeStore from './recipeStore';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +20,7 @@ const EditRecipeForm = ({ recipeId, onCancel }) => {
   }, [recipeId, recipes]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Add this critical line
     updateRecipe({ id: recipeId, title, description });
     navigate(`/recipes/${recipeId}`);
   };
@@ -31,11 +32,13 @@ const EditRecipeForm = ({ recipeId, onCancel }) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
+        required
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
+        required
       />
       <button type="submit">Save</button>
       <button type="button" onClick={onCancel}>Cancel</button>

@@ -6,12 +6,13 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addRecipe({ id: Date.now(), title, description });
-    setTitle('');
-    setDescription('');
-  };
+// src/components/AddRecipeForm.jsx
+const handleSubmit = (event) => {
+  event.preventDefault(); // Should already be present here
+  addRecipe({ id: Date.now(), title, description });
+  setTitle('');
+  setDescription('');
+};
 
   return (
     <form onSubmit={handleSubmit}>
