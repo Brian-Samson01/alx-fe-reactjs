@@ -25,6 +25,11 @@ const RecipeDetails = () => {
           Back to List
         </button>
       </div>
+      <div className="action-buttons">
+        <FavoriteButton recipeId={recipe.id} />
+        <button onClick={() => setIsEditing(true)}>Edit Recipe</button>
+        <DeleteRecipeButton recipeId={recipe.id} />
+      </div>
     </div>
   );
 };

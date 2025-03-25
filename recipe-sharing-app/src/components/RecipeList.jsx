@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import useRecipeStore from './recipeStore';
+// src/components/RecipeList.jsx
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import useRecipeStore  from './recipeStore';
 
 const RecipeList = () => {
   const getFilteredRecipes = useRecipeStore(state => state.getFilteredRecipes);
@@ -10,11 +11,9 @@ const RecipeList = () => {
     <div className="recipe-list">
       {filteredRecipes.map(recipe => (
         <div key={recipe.id} className="recipe-card">
-          <Link to={`/recipes/${recipe.id}`} className="recipe-link">
+          <Link to={`/recipes/${recipe.id}`}>
             <h3>{recipe.title}</h3>
-            <p className="recipe-excerpt">
-              {recipe.description.substring(0, 100)}...
-            </p>
+            <p>{recipe.description.substring(0, 100)}...</p>
           </Link>
         </div>
       ))}
