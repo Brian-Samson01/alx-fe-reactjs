@@ -20,7 +20,7 @@ const EditRecipeForm = ({ recipeId, onCancel }) => {
   }, [recipeId, recipes]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Add this critical line
+    event.preventDefault(); // Add this critical line
     updateRecipe({ id: recipeId, title, description });
     navigate(`/recipes/${recipeId}`);
   };
