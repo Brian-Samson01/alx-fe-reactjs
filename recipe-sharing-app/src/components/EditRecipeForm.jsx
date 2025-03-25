@@ -1,35 +1,44 @@
-import { useState } from 'react';
-import useRecipeStore from '../components/recipeStore';
+import { useState, useEffect } from 'react';
+import useRecipeStore from './recipeStore';
+import { useNavigate } from 'react-router-dom';
 
+const EditRecipeForm = ({ recipeId, onCancel }) => {
+  const recipes = useRecipeStore(state => state.recipes);
+  const updateRecipe = useRecipeStore(state => state.updateRecipe);
+  const navigate = useNavigate();
+  
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-const EditRecipeForm = ({ recipe }) => {
-  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
-  const [title, setTitle] = useState(recipe.title);
-  const [description, setDescription] = useState(recipe.description);
+  useEffect(() => {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (recipe) {
+      setTitle(recipe.title);
+      setDescription(recipe.description);
+    }
+  }, [recipeId, recipes]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    updateRecipe({ ...recipe, title, description });
-    alert('Recipe updated!');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateRecipe({ id: recipeId, title, description });
+    navigate(`/recipes/${recipeId}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded mt-4">
-      <h3 className="text-lg font-bold">Edit Recipe</h3>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="p-2 border rounded w-full mb-2"
+        placeholder="Title"
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="p-2 border rounded w-full mb-2"
+        placeholder="Description"
       />
-      <button type="submit" className="p-2 bg-blue-500 text-white rounded w-full">
-        Save Changes
-      </button>
+      <button type="submit">Save</button>
+      <button type="button" onClick={onCancel}>Cancel</button>
     </form>
   );
 };
