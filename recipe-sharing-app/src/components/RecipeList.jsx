@@ -1,29 +1,21 @@
 import { Link } from 'react-router-dom';
 import useRecipeStore from './recipeStore';
+import { useMemo } from 'react';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore(state => state.recipes);
+  const getFilteredRecipes = useRecipeStore(state => state.getFilteredRecipes);
+  const filteredRecipes = useMemo(() => getFilteredRecipes(), [getFilteredRecipes]);
 
   return (
-    <div style={{ display: 'grid', gap: '20px' }}>
-      {recipes.map(recipe => (
-        <div 
-          key={recipe.id}
-          style={{
-            padding: '15px',
-            border: '1px solid #eee',
-            borderRadius: '8px'
-          }}
-        >
-          <Link 
-            to={`/recipes/${recipe.id}`}
-            style={{ textDecoration: 'none', color: '#333' }}
-          >
-            <h3 style={{ margin: '0 0 10px 0' }}>{recipe.title}</h3>
+    <div className="recipe-list">
+      {filteredRecipes.map(recipe => (
+        <div key={recipe.id} className="recipe-card">
+          <Link to={`/recipes/${recipe.id}`} className="recipe-link">
+            <h3>{recipe.title}</h3>
+            <p className="recipe-excerpt">
+              {recipe.description.substring(0, 100)}...
+            </p>
           </Link>
-          <p style={{ margin: '0' }}>
-            {recipe.description.substring(0, 100)}...
-          </p>
         </div>
       ))}
     </div>
